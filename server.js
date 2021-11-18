@@ -5,7 +5,7 @@ const cors = require("cors")
 // include and initialize the rollbar library with your access token
 var Rollbar = require('rollbar')
 var rollbar = new Rollbar({
-  accessToken: '2e86007c55f8403fa4f832f53b3fc193',
+  accessToken: 'f6c5560f2ed649eaa518e82c952d2362',
   captureUncaught: true,
   captureUnhandledRejections: true,
 })
@@ -14,6 +14,7 @@ var rollbar = new Rollbar({
 rollbar.log('Hello world!')
 
 const app = express()
+app.use(express.json())
 
 const students = ["Kristian"]
 
@@ -45,6 +46,8 @@ app.post("/api/students", (req, res) => {
         res.status(400).send("That student already exists")
     }
 })
+
+app.use(rollbar.errorHandler())
 
 const port = process.env.PORT || 4545
 
